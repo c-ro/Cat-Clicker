@@ -69,8 +69,20 @@ window.onload = function(){
 			catView.renderCount(model.currentCat);
 		},
 
-		updateCat: function(object){
-			// model.currentCat = 
+		update: function(cat){
+			var currentCat = controller.getCurrentCat();
+			this.adminPanel = document.getElementById('admin-panel');
+
+			for(i = 0; i < model.cats.length; i++){
+			    if(currentCat.catName === model.cats[i].catName){
+			        model.cats[i].catName = cat.catName;
+			        model.cats[i].source = cat.source;
+			        model.cats[i].count = cat.count;
+			   		catView.render();
+			   		listView.render();
+			        this.adminPanel.style.display = 'none';
+			    }
+			};
 		}
 	},
 
@@ -102,6 +114,8 @@ window.onload = function(){
 
 				this.list.appendChild(listItem);
 			}
+
+			adminView.init();
 		}
 	},
 
@@ -174,29 +188,12 @@ window.onload = function(){
 				}
 
 			this.adminButton = document.getElementById('update');
-			this.adminButton.addEventListener('click', function(){adminView.update(getValue())});
+			this.adminButton.addEventListener('click', function(){controller.update(getValue())});
 		},
 
 		cancel: function(){
 			this.adminPanel = document.getElementById('admin-panel');
 			this.adminPanel.style.display = 'none';
-		},
-
-		update: function(cat){
-			var currentCat = controller.getCurrentCat();
-			this.adminPanel = document.getElementById('admin-panel');
-			console.log(cat);
-			for(i = 0; i < model.cats.length; i++){
-			    if(currentCat.catName === model.cats[i].catName){
-			    	console.log(cat.catName);
-			        model.cats[i].catName = cat.catName;
-			        model.cats[i].source = cat.source;
-			        model.cats[i].count = cat.count;
-			   		catView.render();
-			   		listView.render();
-			        this.adminPanel.style.display = 'none';
-			    }
-			};
 		}
 	}
 
